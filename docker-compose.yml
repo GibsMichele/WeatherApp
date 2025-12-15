@@ -1,0 +1,57 @@
+version: "3.9"
+
+services:
+  mosquitto:
+    image: eclipse-mosquitto:2
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
+
+  station1:
+    build:
+      context: ./stations
+      dockerfile: Dockerfile
+    environment:
+      - STATION_ID=WS-01
+      - INTERVAL=5
+      - BROKER_URL=mqtt://mosquitto:1883
+    depends_on:
+      - mosquitto
+
+  station2:
+    build:
+      context: ./stations
+      dockerfile: Dockerfile
+    environment:
+      - STATION_ID=WS-02
+      - INTERVAL=7
+      - BROKER_URL=mqtt://mosquitto:1883
+    depends_on:
+      - mosquitto
+
+  station3:
+    build:
+      context: ./stations
+      dockerfile: Dockerfile
+    environment:
+      - STATION_ID=WS-03
+      - INTERVAL=3
+      - BROKER_URL=mqtt://mosquitto:1883
+    depends_on:
+      - mosquitto
+
+  weather_client:
+    image: node:18
+    working_dir: /app
+    volumes:
+      - ./:/app
+    command: >
+      sh -c "npm init -y >/dev/null 2>&1 || true && npm install --omit=dev mqtt && node mqtt_weather_client.js"
+    environment:
+      - BROKER_URL=mqtt://mosquitto:1883   
+      - TOPIC=weather
+      - CLIENT_ID=weather_dashboard_client_js
+    depends_on:
+      - mosquitto
+

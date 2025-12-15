@@ -1,0 +1,15 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "Dieses Projekt simuliert verteilte Wetterstationen, die Messdaten über MQTT an einen Broker senden.",
+  "main": "mqtt_weather_client.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mqtt": "^5.14.1"
+  }
+}
