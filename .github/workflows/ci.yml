@@ -37,6 +37,7 @@ jobs:
         working-directory: stations                      
         env:
           DISABLE_MQTT: "1"
+          PYTHONPATH: .
         run: pytest -q
 
   docker:
