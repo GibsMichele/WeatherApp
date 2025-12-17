@@ -46,3 +46,5 @@ if __name__ == "__main__":
         print("MQTT disabled for tests (DISABLE_MQTT=1).")
     else:
         main()
+
+#Test
