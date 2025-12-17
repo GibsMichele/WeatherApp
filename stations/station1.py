@@ -45,6 +45,6 @@ if __name__ == "__main__":
     if os.getenv("DISABLE_MQTT") == "1":
         print("MQTT disabled for tests (DISABLE_MQTT=1).")
     else:
-        main()
+        main(
 
 #Test
